@@ -17,7 +17,7 @@ function CampusList() {
     
     useEffect(() => {
 
-        getCampus(firebaseDb)
+        getCampus(db)
     .then( (res) => setCampusList(res))
 
     }, [])
@@ -81,6 +81,7 @@ function CampusList() {
         <div>
             Hola
             <CampusNavBar/>
+            
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 300, maxWidth: 700, m: "auto" }} aria-label="simple table">
                     <TableHead>

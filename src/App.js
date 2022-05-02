@@ -7,6 +7,8 @@ import Register from './components/Login/Register';
 import Dashboard from './components/Login/Dashboard';
 import CampusList from './components/Campus/CampusList';
 import CampusForm from './components/Campus/CampusForm';
+import UserForm from './components/Users/UserForm';
+import UserList from './components/Users/UserList';
 
 function App() {
 
@@ -21,8 +23,10 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/campusList" element={<CampusList />} />
+          <Route exact path="/userList" element={<UserList />} />
           <Route exact path="/userList" element={<Dashboard />} />
           <Route exact path="/newCampus" element={<CampusForm />} />
+          <Route exact path="/newUser" element={<UserForm />} />
         </Routes>
       </Router>
     </div>

@@ -81,6 +81,7 @@ function CampusForm  () {
                 label="Activo" />
             &nbsp;
             <Button variant='contained' onClick={ () => addCampus()}>Agregar</Button>
+            <Button sx={{ marginRight: '10px'}} variant='contained' onClick={ () => navigate("/campusList")}> Regresar </Button>
 
             </div>
 
