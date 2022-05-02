@@ -51,6 +51,14 @@
   background-color: #dcdcdc;
   padding: 30px;
 }
+.add__container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #dcdcdc;
+  padding: 80px;
+  margin-bottom: 10px;
+}
 .login__textBox {
   padding: 10px;
   font-size: 18px;

@@ -27,9 +27,15 @@ function Dashboard() {
   return (
     <div className="dashboard">
        <div className="dashboard__container">
-        Logged in as
+        Ingresó como
          <div>{name}</div>
          <div>{user?.email}</div>
+         <button className="dashboard__btn" onClick={() => navigate("/campusList")}>
+          Ver sedes
+         </button>
+         <button className="dashboard__btn" onClick={() => navigate("/userList")}>
+          Ver usuarios
+         </button>
          <button className="dashboard__btn" onClick={logout}>
           Logout
          </button>

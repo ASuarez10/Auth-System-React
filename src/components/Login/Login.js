@@ -23,27 +23,25 @@ function Login() {
           className="login__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
+          placeholder="Email"
         />
         <input
           type="password"
           className="login__textBox"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="Contraseña"
         />
         <button
           className="login__btn"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
-          Login
+          Ingresar
         </button>
         
+        
         <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          No tienes cuenta? <Link to="/register">Registrate</Link> ahora.
         </div>
       </div>
     </div>

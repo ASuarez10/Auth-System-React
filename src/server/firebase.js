@@ -82,6 +82,7 @@ const sendPasswordReset = async (email) => {
 };
 
 export {
+        app,
         auth,
         db,
         logInWithEmailAndPassword,
