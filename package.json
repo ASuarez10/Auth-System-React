@@ -2,7 +2,7 @@
   "name": "auth-system",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://asuarez10.github.io/Auth-System-React/",
+  "homepage": "https://ASuarez10.github.io/Auth-System-React/",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.6.2",
