@@ -15,18 +15,28 @@ function UserList() {
     const [findByName, setfindByName] = useState([])
     const [findByCampus, setfindByCampus] = useState([])
     const firebaseDb = getFirestore(app)
+    const [searchState, setSearchState] = useState(0)
     
     useEffect(() => {
 
         getUsers(firebaseDb)
-    .then( (res) => setUserList(res))
+        .then( (res) => setUserList(res))
 
     }, [])
+
+    const throwbackUsers = async (db) => {
+        const userCol = collection(db, 'users')
+        const userCursor = await getDocs(userCol)
+        const userList =  userCursor.docs.map(doc => doc.data())
+        setUserList(userList);
+        return userList
+    }
 
     const getUsersByName = async (db, uname) => {
         const q = query(collection(db, "users"), where("name", "==", uname));
         const userCursor = await getDocs(q)
         const userList =  userCursor.docs.map(doc => doc.data())
+        setUserList(userList);
         return userList
     }
 
@@ -34,6 +44,7 @@ function UserList() {
         const q = query(collection(db, "users"), where("campus", "==", ucampus));
         const userCursor = await getDocs(q)
         const userList =  userCursor.docs.map(doc => doc.data())
+        setUserList(userList);
         return userList
     }
 
@@ -44,7 +55,20 @@ function UserList() {
         return userList
     }
 
-    const delUser = (user) => {
+    const delUser = async(user) => {
+        await deleteDoc(doc(db, "users", user.id+""))
+        .then(() => {
+            getUsers(firebaseDb)
+            .then( (res) => setUserList(res))
+        })
+        let users = [...userList]
+        let index = users.findIndex( userItem => userItem.id === user.id )
+        //    tasks.push(task)
+        users.splice(index,1)
+        setUserList(users)
+    }
+
+    const delUser2 = (user) => {
         deleteDoc(doc(firebaseDb, "users", user.id+""))
         .then(() => {
             getUsers(firebaseDb)
@@ -74,11 +98,16 @@ function UserList() {
             &nbsp;
             <div className="user_page">
             <input type="text"  placeholder='Buscar por nombre' name='findByName' value={findByName} onChange={(e) => setfindByName(e.target.value)}/>
-            <Button variant='contained' >Buscar</Button>
+            <Button variant='contained' id="fbname" onClick={() => getUsersByName(firebaseDb, findByName)} >Buscar</Button>
+            
             </div>
             <div className="user_page">
             <input type="text"  placeholder='Buscar por sede' name='findByCampus' value={findByCampus} onChange={(e) => setfindByCampus(e.target.value)}/>
-            <Button variant='contained' >Buscar</Button>
+            <Button variant='contained' onClick={() => getUsersByCampus(firebaseDb, findByCampus)}>Buscar</Button>
+            </div>
+
+            <div className="user_page">
+            <Button variant='contained' onClick={() => throwbackUsers(firebaseDb)} >Reestablecer</Button>
             </div>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 300, maxWidth: 700, m: "auto" }} aria-label="simple table">

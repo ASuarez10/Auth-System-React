@@ -17,22 +17,40 @@ function UserForm  () {
     const [campus, setcampus] = useState("");
     const [active, setactive] = useState(false);
 
+    const firebaseDb = getFirestore(app)
+    const [campusList, setCampusList] = useState([])
+
+    useEffect(() => {
+
+        getCampus(firebaseDb)
+        .then( (res) => setCampusList(res))
+
+    }, [])
+
+    const getCampus = async (db) => {
+        const campusCol = collection(db, 'campus')
+        const campusCursor = await getDocs(campusCol)
+        const campusList =  campusCursor.docs.map(doc => doc.data())
+        return campusList
+    }
 
     const addUser = async() => {
 
         const id = Math.floor(Math.random()*10000)
 
+
+
         try{
 
             await addDoc(collection(db, "users"), {
 
-                id: id,
+                id:id,
                 name,
                 lastName,
                 email,
                 password,
                 valid,
-                campus,
+                campus:campuses(),
                 active
 
             });
@@ -50,6 +68,11 @@ function UserForm  () {
 
     };
 
+    const campuses = () => {
+        var select = document.getElementById('campuses')
+        return select.value;
+    }
+
 
     return(
 
@@ -65,10 +88,22 @@ function UserForm  () {
             &nbsp;
             <input type="text"  placeholder='Contraseña del usuario' name='password' value={password} onChange={(e) => setpassword(e.target.value)}/>
             &nbsp;
-            <input type="text"  placeholder='Valido hasta' name='valid' value={valid} onChange={(e) => setvalid(e.target.value)}/>
+            <input type="date"  placeholder='Valido hasta' name='valid' value={valid} onChange={(e) => setvalid(e.target.value)}/>
             &nbsp;
-            <input type="text"  placeholder='Sede' name='campus' value={campus} onChange={(e) => setcampus(e.target.value)}/>
+
+            <select id='campuses' name='campus' onChange={(e) => setcampus(e.target.value)}>
+                {campusList.map(list => (
+                    <option key={list.id} value={list.campusName} onChange={(e) => setcampus(e.target.value)}>
+                        {list.campusName}
+                    </option>
+                ))}
+            </select>
+
             &nbsp;
+            
+            
+
+
             <FormControlLabel control={
                 <Checkbox defaultChecked name="active" color="primary" value={active} 
                            onChange={(e) => setactive(e.target.checked)}/>

@@ -2,6 +2,8 @@ import React from 'react';
 import {Button, TableCell, TableRow} from '@material-ui/core';
 
 function User ({user, delUser, editUser}){
+
+
     return(
         <TableRow>
             <TableCell>{user.id}</TableCell>
